@@ -1,0 +1,33 @@
+//BACKTRACKING APPORACH to solve unique paths problem
+
+export default function btUniquePaths(
+  width,
+  height,
+  steps = [[0, 0]],
+  uniqueSteps = 0
+) {
+  const currentPos = steps[steps.length - 1];
+  if (currentPos[0] === width - 1 && currentPos[1] === height - 1) {
+    return uniqueSteps + 1;
+  }
+
+  let rightUniqueSteps = 0;
+  let downUniqueSteps = 0;
+  if (currentPos[0] < width - 1) {
+    steps.push([currentPos[0] + 1, currentPos[1]]);
+    rightUniqueSteps = btUniquePaths(width, height, steps, uniqueSteps);
+
+    //Bactrack andtry another move
+    steps.pop();
+  }
+  if (currentPos[1] < height - 1) {
+    steps.push([currentPos[0], currentPos[1] + 1]);
+    downUniqueSteps = btUniquePaths(width, height, steps, uniqueSteps);
+
+    //Bactrack andtry another move
+    steps.pop();
+  }
+
+  return rightUniqueSteps + downUniqueSteps;
+}
+console.log(btUniquePaths(7, 3));
