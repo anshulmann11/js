@@ -22,5 +22,3 @@ var minEatingSpeed = function (piles, h) {
   }
   return min;
 };
-
-
