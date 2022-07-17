@@ -1,45 +1,29 @@
-var head;
-class Node {
-  constructor(val) {
-    this.data = val;
-    this.next = null;
-  }
-}
+const smallest = function (s, n) {
+  let maxLength = 0;
+  let charFrequency = {};
+  let windowStart = 0;
+  for (let windowEnd = 0; windowEnd < s.length; windowEnd++) {
+    const rightChar = s[windowEnd];
 
-function traverseList(head) {
-  let length = 0;
-  while (head != null) {
-    length += 1;
-
-    head = head.next;
-  }
-  return length;
-}
-
-function reorderlist(head) {
-  let prev = null;
-  let next = null;
-  let listlen = traverseList(head);
-  let newLength = 0;
-  while (head != null) {
-    console.log(head);
-    newLength++;
-    console.log(listlen / 2);
-    if (newLength >= 1 + listlen / 2) {
-      console.log(head);
-      next = head.next;
-      head.next = prev;
-      prev = head;
+    if (!(rightChar in charFrequency)) {
+      charFrequency[rightChar] = 0;
     }
 
-    head = head.next;
-  }
-}
-//letlistlen = traverseList(head);
-head = new Node(85);
-head.next = new Node(15);
-head.next.next = new Node(4);
-head.next.next.next = new Node(20);
-let listlen = console.log(traverseList(head));
+    charFrequency[rightChar] += 1;
 
-console.log(reorderlist(head));
+    while (Object.keys(charFrequency).length > n) {
+      const leftChar = s[windowStart];
+
+      // charFrequency[leftChar] -= 1;
+
+      // if (charFrequency[leftChar] === 0) {
+      delete charFrequency[leftChar];
+      // }
+      windowStart += 1;
+    }
+    maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
+  }
+
+  return maxLength;
+};
+console.log(smallest("cbbebi", 3));
